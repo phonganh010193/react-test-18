@@ -1,0 +1,24 @@
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 281px;
+    padding: 10px;
+    border: 1px solid #dfe6e9;
+    position: relative;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  .dots {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .container {
+    padding: 2px 16px;
+  }
