@@ -16,7 +16,8 @@ export default class TodoApp extends Component {
             isActive: false,
             isComplete: false,
             editItem: {},
-            showInputEditItem: false
+            showInputEditItem: false,
+            showList: false,
         }
     }
 
@@ -85,6 +86,13 @@ export default class TodoApp extends Component {
         }))
     }
 
+    handleShowList = () => {
+        this.setState((prevState) => ({
+            ...prevState,
+            showList: true
+        }))
+    }
+
 
     render() {
         return (
@@ -115,9 +123,12 @@ export default class TodoApp extends Component {
                         content={this.state.content}
                         handleOnchangeInputEdit={(event) => this.handleOnchangeInputEdit(event)}
                         handleOnEditItem={this.handleOnEditItem}
+                        showList={this.state.showList}
                     />
                     <TodoFilter
                         todoList={this.state.todoList}
+                        handleShowList={this.handleShowList}
+
                     />
                 </div>
             </section>

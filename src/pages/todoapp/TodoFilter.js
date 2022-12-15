@@ -20,7 +20,7 @@ class TodoFilter extends React.Component {
                     </span>
                     <ul className="filters" data-reactid=".0.2.1">
                         <li data-reactid=".0.2.1.0">
-                            <a href="#/" className="selected" data-reactid=".0.2.1.0.0">
+                            <a href="#/" className="selected" onClick={this.props.handleShowList} data-reactid=".0.2.1.0.0">
                                 All
                             </a>
                         </li>
