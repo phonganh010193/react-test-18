@@ -9,10 +9,9 @@ class ListTodo extends React.Component {
     };
     render() {
         const { todoList } = this.props
-        console.log('todolistasd ', todoList)
+        console.log('todolist sau khi up date ', todoList)
 
         return (
-
             <div>
                 <section className="main" data-reactid=".0.1">
                     <input
@@ -46,7 +45,9 @@ class ListTodo extends React.Component {
                                                         className="toggle"
                                                         type="checkbox"
                                                         data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654.0.0"
-
+                                                        checked={item.isComplete}
+                                                        onChange={() => this.props.handleOnChangeCheckbox(item)}
+                                                        
                                                     />
                                                     <label
                                                         data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654.0.1"
@@ -54,7 +55,7 @@ class ListTodo extends React.Component {
                                                             this.props.handleOnclickEditItem(item)
                                                         }}
                                                     >
-                                                        {item.content}
+                                                        <p style={item.isComplete === true? {textDecoration:"line-through", color:"gray", margin: "0px", opacity: 0.4} : {margin:"0px"}}>{item.content}</p>
                                                     </label>
                                                     <button
                                                         className="destroy"

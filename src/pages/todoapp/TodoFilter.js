@@ -9,6 +9,7 @@ class TodoFilter extends React.Component {
     };
     render() {
         const { todoList } = this.props;
+        console.log('todoList from filter', todoList);
         return (
             <div>
                 <footer className="footer" data-reactid=".0.2">
@@ -26,13 +27,13 @@ class TodoFilter extends React.Component {
                         </li>
                         <span data-reactid=".0.2.1.1"> </span>
                         <li data-reactid=".0.2.1.2">
-                            <a href="#/active" className="" data-reactid=".0.2.1.2.0">
+                            <a href="#/active" className="" onClick={this.props.handleShowActiveList} data-reactid=".0.2.1.2.0">
                                 Active
                             </a>
                         </li>
                         <span data-reactid=".0.2.1.3"> </span>
                         <li data-reactid=".0.2.1.4">
-                            <a href="#/completed" className="" data-reactid=".0.2.1.4.0">
+                            <a href="#/completed" className="" onClick={this.props.handleCompleteList} data-reactid=".0.2.1.4.0">
                                 Completed
                             </a>
                         </li>

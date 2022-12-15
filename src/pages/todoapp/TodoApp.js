@@ -13,8 +13,6 @@ export default class TodoApp extends Component {
                 { id: 3, content: "an toi", isActive: false, isComplete: false }
             ],
             content: "",
-            isActive: false,
-            isComplete: false,
             editItem: {},
             showInputEditItem: false,
             showList: false,
@@ -93,7 +91,40 @@ export default class TodoApp extends Component {
         }))
     }
 
+    handleOnChangeCheckbox= (item) => {
+        console.log('item checkbox', item)
+        this.setState((prevState) => ({
+            ...prevState,
+            todoList:[
+                ...prevState.todoList.map((el, index) => {
+                    if(item.id === el.id) {
+                        return {
+                            ...el,
+                            isComplete: !item.isComplete
+                        }
+                    }
+                    return el;
+                })
+            
+            ]
+        }))
+    }
 
+    // handleShowActiveList = () => {
+    //     this.setState((prevState) => ({
+    //         ...prevState,
+    //         todoList: prevState.todoList.filter(el => el.isComplete !== true)
+    //     }))
+    // }
+
+    // handleCompleteList = () => {
+    //     this.setState((prevState) => ({
+    //         ...prevState,
+    //         todoList: prevState.todoList.filter(el => el.isComplete === true)
+    //     }))
+    // }
+    
+    
     render() {
         return (
             <section className="todoapp">
@@ -124,11 +155,13 @@ export default class TodoApp extends Component {
                         handleOnchangeInputEdit={(event) => this.handleOnchangeInputEdit(event)}
                         handleOnEditItem={this.handleOnEditItem}
                         showList={this.state.showList}
+                        handleOnChangeCheckbox={(item) => this.handleOnChangeCheckbox(item)}
                     />
                     <TodoFilter
                         todoList={this.state.todoList}
                         handleShowList={this.handleShowList}
-
+                        // handleShowActiveList={this.handleShowActiveList}
+                        // handleCompleteList={this.handleCompleteList}
                     />
                 </div>
             </section>
