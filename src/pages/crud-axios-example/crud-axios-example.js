@@ -53,26 +53,25 @@ export default class CrudAxiosExample extends Component {
       avatar: "",
       name: "",
       description: "",
-      mode: "",
+      mode: true,
       editItem: {}
     };
   }
 
-  handleShowSubmitModelEmtries = () => {
+  handleShowModelEmtries = () => {
     this.setState((prevState) => ({
       ...prevState,
       showModelEmtries: true,
-      mode: "Submit"
     }))
   }
 
-  handleShowUpdateModelEmtries = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      showModelEmtries: true,
-      mode: "Update"
-    }))
-  }
+  // handleShowModelEmtries = () => {
+  //   this.setState((prevState) => ({
+  //     ...prevState,
+  //     showModelEmtries: true,
+  //     mode: "Update"
+  //   }))
+  // }
 
   handleHideModelEmtries = () => {
     this.setState((prevState) => ({
@@ -80,14 +79,15 @@ export default class CrudAxiosExample extends Component {
       showModelEmtries: false,
       avatar: "",
       name: "",
-      description: ""
+      description: "",
+      mode: true
     }))
   }
 
   handleOnClickDeleteItem = (item) => {
     this.setState((prevState) => ({
       ...prevState,
-      listEntries: this.state.listEntries.filter(el => el.id !== item.id)
+      listEntries: prevState.listEntries.filter(el => el.id !== item.id)
     }))
   }
 
@@ -95,7 +95,11 @@ export default class CrudAxiosExample extends Component {
     console.log('editItem', item);
     this.setState((prevState) => ({
       ...prevState,
-      editItem: item
+      editItem: item,
+      avatar: item.avatar,
+      name: item.name,
+      description: item.description,
+      mode: false
     }))
   }
 
@@ -103,10 +107,6 @@ export default class CrudAxiosExample extends Component {
     this.setState((prevState) => ({
       ...prevState,
       avatar: event.target.value,
-      editItem: {
-        ...prevState.editItem,
-        avatar: event.target.value,
-      },
       validateImage: ""
     }))
   }
@@ -115,10 +115,6 @@ export default class CrudAxiosExample extends Component {
     this.setState((prevState) => ({
       ...prevState,
       name: event.target.value,
-      editItem: {
-        ...prevState.editItem,
-        name: event.target.value,
-      },
       validateName: ""
     }))
   }
@@ -127,82 +123,129 @@ export default class CrudAxiosExample extends Component {
     this.setState((prevState) => ({
       ...prevState,
       description: event.target.value,
-      editItem: {
-        ...prevState.editItem,
-        description: event.target.value,
-      },
       validateDescription: ""
     }))
   }
   handleOnsubmit = () => {
-    const { editItem } = this.state;
-    console.log('editItemUpdate', editItem)
-    if (this.state.mode !== "Submit") {
-      let copyListEntries = [...this.state.listEntries];
-      let editIndex = copyListEntries.findIndex(el => el.id === editItem.id);
-      copyListEntries[editIndex].avatar = editItem.avatar;
-      copyListEntries[editIndex].name = editItem.name;
-      copyListEntries[editIndex].description = editItem.description;
+    // const { editItem } = this.state;
+    // console.log('editItemUpdate', editItem)
+    // if (this.state.mode !== "Submit") {
+    //   let copyListEntries = [...this.state.listEntries];
+    //   let editIndex = copyListEntries.findIndex(el => el.id === editItem.id);
+    //   copyListEntries[editIndex].avatar = editItem.avatar;
+    //   copyListEntries[editIndex].name = editItem.name;
+    //   copyListEntries[editIndex].description = editItem.description;
+    //   this.setState((prevState) => ({
+    //     ...prevState,
+    //     listEntries: copyListEntries,
+    //     editItem: {},
+    //     showModelEmtries: false,
+    //     avatar: "",
+    //     name: "",
+    //     description: "",
+    //     validateName: "",
+    //     validateDescription: "",
+    //     validateImage: ""
+    //   }))
+    //   return;
+    // }
+
+    // if (!this.state.avatar) {
+    //   this.setState((prevState) => ({
+    //     ...prevState,
+    //     validateImage: "Missing avatar.",
+    //   }));
+
+    // }
+    // if (!this.state.name) {
+    //   this.setState((prevState) => ({
+    //     ...prevState,
+    //     validateName: "Missing Name"
+    //   }));
+
+    // }
+    // if (!this.state.description) {
+    //   this.setState((prevState) => ({
+    //     ...prevState,
+    //     validateDescription: "Missing Description"
+    //   }));
+    //   return;
+    // }
+    // this.setState((prevState) => ({
+    //   ...prevState,
+    //   listEntries: [
+    //     ...prevState.listEntries,
+    //     {
+    //       id: Math.floor(Math.random() * 1000),
+    //       avatar: prevState.avatar,
+    //       name: prevState.name,
+    //       description: prevState.description
+    //     }
+    //   ],
+    //   avatar: "",
+    //   name: "",
+    //   description: "",
+    //   validateName: "",
+    //   validateDescription: "",
+    //   validateImage: "",
+    //   showModelEmtries: false
+    // }));
+    if (!this.state.avatar || !this.state.name || !this.state.description) {
+      alert('Xin hay nhap du du lieu');
+      return;
+    }
+    if (this.state.mode) {
       this.setState((prevState) => ({
         ...prevState,
-        listEntries: copyListEntries,
-        editItem: {},
-        showModelEmtries: false,
+        listEntries: [
+          ...prevState.listEntries,
+          {
+            id: Math.floor(Math.random() * 1000),
+            avatar: prevState.avatar,
+            name: prevState.name,
+            description: prevState.description
+          }
+        ],
         avatar: "",
         name: "",
         description: "",
+        showModelEmtries: false,
         validateName: "",
         validateDescription: "",
         validateImage: ""
       }))
-      return;
-    }
-
-    if (!this.state.avatar) {
+    } else {
       this.setState((prevState) => ({
         ...prevState,
-        validateImage: "Missing avatar.",
-      }));
-
+        listEntries: [
+          ...prevState.listEntries.map((it) => {
+            if (it.id === prevState.editItem.id) {
+              return {
+                ...it,
+                avatar: prevState.avatar,
+                name: prevState.name,
+                description: prevState.description
+              }
+            }
+            return it;
+          })
+        ],
+        editItem: {},
+        avatar: "",
+        name: "",
+        description: "",
+        showModelEmtries: false,
+        validateName: "",
+        validateDescription: "",
+        validateImage: "",
+      }))
     }
-    if (!this.state.name) {
-      this.setState((prevState) => ({
-        ...prevState,
-        validateName: "Missing Name"
-      }));
-
-    }
-    if (!this.state.description) {
-      this.setState((prevState) => ({
-        ...prevState,
-        validateDescription: "Missing Description"
-      }));
-      return;
-    }
-    this.setState((prevState) => ({
-      ...prevState,
-      listEntries: [
-        ...prevState.listEntries,
-        {
-          id: Math.floor(Math.random() * 1000),
-          avatar: prevState.avatar,
-          name: prevState.name,
-          description: prevState.description
-        }
-      ],
-      avatar: "",
-      name: "",
-      description: "",
-      validateName: "",
-      validateDescription: "",
-      validateImage: "",
-      showModelEmtries: false
-    }));
   }
+
   render() {
     return (
       <>
-        <Header handleShowSubmitModelEmtries={() => this.handleShowSubmitModelEmtries()} />
+        <Header handleShowModelEmtries={() => this.handleShowModelEmtries()} />
         <main className="wrap_list" id="wrap_list">
           {this.state.listEntries.map((item) => {
             return (
@@ -213,7 +256,7 @@ export default class CrudAxiosExample extends Component {
                 description={item.description}
                 handleOnClickDeleteItem={() => this.handleOnClickDeleteItem(item)}
                 handleOnclickEdititem={() => this.handleOnclickEdititem(item)}
-                handleShowUpdateModelEmtries={this.handleShowUpdateModelEmtries}
+                handleShowModelEmtries={this.handleShowModelEmtries}
               />
             );
           })}

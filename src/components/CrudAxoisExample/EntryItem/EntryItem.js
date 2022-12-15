@@ -11,7 +11,7 @@ export default class EntryItem extends React.Component {
   render() {
     return (
       <div className="card" onClick={() => {
-        this.props.handleShowUpdateModelEmtries()
+        this.props.handleShowModelEmtries()
         this.props.handleOnclickEdititem()
       }}>
         <img

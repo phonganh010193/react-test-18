@@ -29,7 +29,7 @@ export default class EntryModal extends Component {
             <input
               className="input__form"
               type="text"
-              value={this.props.mode === "Submit" ? this.props.avatar : this.props.editItem.avatar}
+              value={this.props.avatar}
               onChange={this.props.handleChangeAvatar}
               placeholder="Image..."
             />
@@ -40,7 +40,7 @@ export default class EntryModal extends Component {
             <input
               className="input__form"
               type="text"
-              value={this.props.mode === "Submit" ? this.props.name : this.props.editItem.name}
+              value={this.props.name}
               onChange={this.props.handleChangeName}
               placeholder="Name..."
             />
@@ -51,7 +51,7 @@ export default class EntryModal extends Component {
             <input
               className="input__form"
               type="text"
-              value={this.props.mode === "Submit" ? this.props.description : this.props.editItem.description}
+              value={this.props.description}
               onChange={this.props.handleChangeDescription}
               placeholder="Description..."
             />
@@ -66,7 +66,7 @@ export default class EntryModal extends Component {
                 event.preventDefault();
                 this.props.handleOnsubmit();
               }}
-            >{this.props.mode === "Submit" ? "Submit" : "Update"}</button>
+            >{this.props.mode === true ? "Submit" : "Update"}</button>
           </form>
         </div>
       </div>

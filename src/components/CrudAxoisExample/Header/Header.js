@@ -25,7 +25,7 @@ export default class Header extends Component {
           <button
             className="btn-new-entries"
             id="myBtn"
-            onClick={this.props.handleShowSubmitModelEmtries}
+            onClick={this.props.handleShowModelEmtries}
           >
             Create new Entry +
           </button>
