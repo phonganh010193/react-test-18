@@ -20,9 +20,6 @@ class ListTodo extends React.Component {
             handleOnChangeCheckbox,
             handleOnCheckboxAll
         } = this.props
-        console.log('todolist sau khi up date ', todoList)
-
-
         return (
             <div>
                 <section className="main" data-reactid=".0.1">

@@ -10,7 +10,12 @@ class TodoFilter extends React.Component {
         }
     };
     render() {
-        const { todoList, handleShowList, tab, handleOnDeleteComplete } = this.props;
+        const { 
+            todoList, 
+            handleShowList, 
+            tab, 
+            handleOnDeleteComplete 
+        } = this.props;
         const numberOf = todoList.reduce(function (accumulator, currentValue) { 
             if (currentValue.isComplete === false){
                 return accumulator + 1 ;
@@ -18,10 +23,6 @@ class TodoFilter extends React.Component {
           return accumulator;
         
         }, 0);
-        
-        
-
-
         return (
             <div>
                 <footer className="footer" data-reactid=".0.2">
