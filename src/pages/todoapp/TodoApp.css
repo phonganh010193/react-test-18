@@ -177,6 +177,21 @@ body {
   display: none;
 }
 
+.view {
+  display: none;
+}
+
+.text-content-active {
+  text-decoration:line-through; 
+  color:gray; 
+  margin: 0px; 
+  opacity: 0.4;
+}
+
+.text-content-unactive{
+  margin: 0px;
+}
+
 .todo-list li .toggle {
   text-align: center;
   width: 40px;

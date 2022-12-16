@@ -44,11 +44,11 @@ class ListTodo extends React.Component {
                                                 data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654"
                                             >
                                                 <div
-                                                    style={showInputEditItem === true && item.id === editItem.id ?
-                                                        { display: "none" }
-                                                        : null
-                                                    }
-                                                    className="view"
+                                                    // style={showInputEditItem === true && item.id === editItem.id ?
+                                                    //     { display: "none" }
+                                                    //     : null
+                                                    // }
+                                                    className={showInputEditItem === true && item.id === editItem.id ? "view" : ""}
                                                     data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654.0"
                                                 >
                                                     <input
@@ -65,7 +65,7 @@ class ListTodo extends React.Component {
                                                             this.props.handleOnclickEditItem(item)
                                                         }}
                                                     >
-                                                        <p style={item.isComplete === true? {textDecoration:"line-through", color:"gray", margin: "0px", opacity: 0.4} : {margin:"0px"}}>{item.content}</p>
+                                                        <p className={item.isComplete === true? "text-content-active" : "text-content-unactive"}>{item.content}</p>
                                                     </label>
                                                     <button
                                                         className="destroy"
