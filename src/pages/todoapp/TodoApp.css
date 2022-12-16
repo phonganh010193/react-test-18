@@ -20,6 +20,11 @@ button {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.clear-completed {
+  text-decoration: none;
+  color: #777;
+}
+
 body {
   font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.4em;

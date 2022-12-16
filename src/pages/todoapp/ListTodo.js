@@ -8,8 +8,20 @@ class ListTodo extends React.Component {
         }
     };
     render() {
-        const { todoList } = this.props
+        const { 
+            todoList, 
+            editItem, 
+            showInputEditItem,
+            showList,
+            content,
+            isAllCheckbox,
+            handleOnEditItem,
+            handleOnchangeInputEdit,
+            handleOnChangeCheckbox,
+            handleOnCheckboxAll
+        } = this.props
         console.log('todolist sau khi up date ', todoList)
+
 
         return (
             <div>
@@ -18,13 +30,14 @@ class ListTodo extends React.Component {
                         id="toggle-all"
                         className="toggle-all"
                         type="checkbox"
+                        checked={isAllCheckbox}
                         data-reactid=".0.1.0"
-                        onClick={this.props.handleActiveCheckbox}
+                        onChange={handleOnCheckboxAll}
                     />
                     <label htmlFor="toggle-all" data-reactid=".0.1.1" />
-                    {this.props.showList === true ?
-                        <>
-                            {this.props.todoList.map((item, index) => {
+                    {showList === true ?
+                        <div>
+                            {todoList.map((item, index) => {
                                 return (
                                     <div key={item.id}>
                                         <ul className="todo-list" data-reactid=".0.1.2"
@@ -34,7 +47,7 @@ class ListTodo extends React.Component {
                                                 data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654"
                                             >
                                                 <div
-                                                    style={this.props.showInputEditItem === true && item.id === this.props.editItem.id ?
+                                                    style={showInputEditItem === true && item.id === editItem.id ?
                                                         { display: "none" }
                                                         : null
                                                     }
@@ -46,7 +59,7 @@ class ListTodo extends React.Component {
                                                         type="checkbox"
                                                         data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654.0.0"
                                                         checked={item.isComplete}
-                                                        onChange={() => this.props.handleOnChangeCheckbox(item)}
+                                                        onChange={() => handleOnChangeCheckbox(item)}
                                                         
                                                     />
                                                     <label
@@ -68,22 +81,20 @@ class ListTodo extends React.Component {
                                                 </div>
 
                                                 <input
-                                                    style={this.props.showInputEditItem === true && item.id === this.props.editItem.id ?
+                                                    style={showInputEditItem === true && item.id === editItem.id ?
                                                         { display: "block" }
                                                         : null
                                                     }
                                                     className="edit"
-                                                    value={this.props.showInputEditItem === true && item.id === this.props.editItem.id ? this.props.editItem.content : this.props.content}
+                                                    value={showInputEditItem === true && item.id === editItem.id ? editItem.content : content}
                                                     data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654.1"
-                                                    onChange={(event) => this.props.handleOnchangeInputEdit(event)}
+                                                    onChange={(event) => handleOnchangeInputEdit(event)}
+                                                    onBlur={handleOnEditItem}
                                                     onKeyDown={(event) => {
                                                         if (event.key === "Enter") {
-                                                            this.props.handleOnEditItem();
+                                                            handleOnEditItem();
                                                             return;
                                                         }
-                                                    }}
-                                                    onBlur={(event) => {
-
                                                     }}
                                                 />
                                             </li>
@@ -91,7 +102,7 @@ class ListTodo extends React.Component {
                                     </div>
                                 );
                             })}
-                        </>
+                        </div>
                         : null
                     }
 

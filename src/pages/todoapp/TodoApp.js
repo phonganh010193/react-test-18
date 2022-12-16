@@ -3,19 +3,26 @@ import ListTodo from "./ListTodo";
 import "./TodoApp.css";
 import TodoFilter from "./TodoFilter";
 
+export const BUTTON = {
+    all: 'all',
+    active: 'active',
+    inactive: 'inactive',
+}
+
 export default class TodoApp extends Component {
     constructor(props) {
         super(props);
         this.state = {
             todoList: [
-                { id: 1, content: "an sang", isActive: false, isComplete: false },
-                { id: 2, content: "an trua", isActive: false, isComplete: false },
-                { id: 3, content: "an toi", isActive: false, isComplete: false }
+                { id: 1, content: "an sang", isComplete: false },
+                { id: 2, content: "an trua", isComplete: false },
+                { id: 3, content: "an toi", isComplete: false }
             ],
             content: "",
             editItem: {},
             showInputEditItem: false,
-            showList: false,
+            showList: true,
+            tab: BUTTON.all,
         }
     }
 
@@ -27,6 +34,9 @@ export default class TodoApp extends Component {
     }
 
     handleOnAddTodoList = () => {
+        if(!this.state.content) {
+            return;
+        }
         this.setState((prevState) => ({
             ...prevState,
             todoList: [
@@ -34,7 +44,6 @@ export default class TodoApp extends Component {
                 {
                     id: Math.floor(Math.random() * 1000),
                     content: prevState.content,
-                    isActive: false,
                     isComplete: false
                 }
             ],
@@ -43,7 +52,6 @@ export default class TodoApp extends Component {
     }
 
     handleOnclickDeleteItem = (item) => {
-        console.log('itemDelete', item);
         this.setState((prevState) => ({
             ...prevState,
             todoList: prevState.todoList.filter(el => el.id !== item.id)
@@ -51,7 +59,6 @@ export default class TodoApp extends Component {
     }
 
     handleOnclickEditItem = (item) => {
-        console.log('itemEdit', item);
         this.setState((prevState) => ({
             ...prevState,
             editItem: item,
@@ -84,46 +91,90 @@ export default class TodoApp extends Component {
         }))
     }
 
-    handleShowList = () => {
+    handleShowList = (tab) => {
         this.setState((prevState) => ({
             ...prevState,
-            showList: true
+            tab,
         }))
     }
 
-    handleOnChangeCheckbox= (item) => {
-        console.log('item checkbox', item)
+    handleOnChangeCheckbox = (item) => {
         this.setState((prevState) => ({
             ...prevState,
-            todoList:[
-                ...prevState.todoList.map((el, index) => {
-                    if(item.id === el.id) {
-                        return {
-                            ...el,
+            todoList: [
+                ...prevState.todoList.map((el) => {
+                    if(el.id === item.id) {
+                        return{
+                            ...item,
                             isComplete: !item.isComplete
                         }
                     }
                     return el;
                 })
-            
-            ]
+            ],
+        }))
+    }
+    handleOnCheckboxAll = () => {
+        const findUnchecked = this.state.todoList.find(el => !el.isComplete);
+        if (findUnchecked) {
+            this.setState((prevState) => ({
+                ...prevState,
+                todoList: prevState.todoList.map((item) => {
+                    return {
+                        ...item,
+                        isComplete: true,
+                    };
+                }),
+                showList: true,
+            }))
+        } else {
+            this.setState((prevState) => ({
+                ...prevState,
+                todoList: prevState.todoList.map((item) => {
+                    return {
+                        ...item,
+                        isComplete: false,
+                    };
+                }),
+                showList: true,
+            }))
+        }
+    }
+
+    isAllChecked() {
+        
+        const findUnchecked = this.state.todoList.find(el => !el.isComplete);
+        if(this.state.todoList.length === 0) {
+            return findUnchecked;
+        }
+        return !findUnchecked;
+    }
+
+    getShowTodoList() {
+        if (this.state.tab === BUTTON.all) {
+            return this.state.todoList;
+        } else if(this.state.tab === BUTTON.active) {
+            return this.state.todoList.filter(el => {
+                return !el.isComplete;
+            });
+        } else {
+            return this.state.todoList.filter(el => {
+                return el.isComplete;
+            });
+        }
+    }
+
+    handleOnDeleteComplete = () => {
+        this.setState((prevState) => ({
+            ...prevState,
+            todoList:prevState.todoList.filter((item) => {
+                if(item.isComplete !== true ) {
+                    return item;
+                }
+            })
         }))
     }
 
-    // handleShowActiveList = () => {
-    //     this.setState((prevState) => ({
-    //         ...prevState,
-    //         todoList: prevState.todoList.filter(el => el.isComplete !== true)
-    //     }))
-    // }
-
-    // handleCompleteList = () => {
-    //     this.setState((prevState) => ({
-    //         ...prevState,
-    //         todoList: prevState.todoList.filter(el => el.isComplete === true)
-    //     }))
-    // }
-    
     
     render() {
         return (
@@ -146,22 +197,24 @@ export default class TodoApp extends Component {
                         />
                     </header>
                     <ListTodo
-                        todoList={this.state.todoList}
+                        isAllCheckbox={this.isAllChecked()}
+                        todoList={this.getShowTodoList()}
+                        showList={this.state.showList}
+                        editItem={this.state.editItem}
+                        content={this.state.content}
                         handleOnclickDeleteItem={(item) => this.handleOnclickDeleteItem(item)}
                         handleOnclickEditItem={(item) => this.handleOnclickEditItem(item)}
-                        editItem={this.state.editItem}
                         showInputEditItem={this.state.showInputEditItem}
-                        content={this.state.content}
                         handleOnchangeInputEdit={(event) => this.handleOnchangeInputEdit(event)}
                         handleOnEditItem={this.handleOnEditItem}
-                        showList={this.state.showList}
-                        handleOnChangeCheckbox={(item) => this.handleOnChangeCheckbox(item)}
+                        handleOnChangeCheckbox={this.handleOnChangeCheckbox}
+                        handleOnCheckboxAll={this.handleOnCheckboxAll}
                     />
                     <TodoFilter
-                        todoList={this.state.todoList}
+                        todoList={this.getShowTodoList()}
                         handleShowList={this.handleShowList}
-                        // handleShowActiveList={this.handleShowActiveList}
-                        // handleCompleteList={this.handleCompleteList}
+                        tab={this.state.tab}
+                        handleOnDeleteComplete={this.handleOnDeleteComplete}
                     />
                 </div>
             </section>
