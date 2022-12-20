@@ -10,18 +10,18 @@ class TodoFilter extends React.Component {
         }
     };
     render() {
-        const { 
-            todoList, 
-            handleShowList, 
-            tab, 
-            handleOnDeleteComplete 
+        const {
+            todoList,
+            handleShowList,
+            tab,
+            handleOnDeleteComplete
         } = this.props;
-        const numberOf = todoList.reduce(function (accumulator, currentValue) { 
-            if (currentValue.isComplete === false){
-                return accumulator + 1 ;
+        const numberOf = todoList.reduce(function (accumulator, currentValue) {
+            if (currentValue.isComplete === false) {
+                return accumulator + 1;
             }
-          return accumulator;
-        
+            return accumulator;
+
         }, 0);
         return (
             <div>
@@ -34,31 +34,52 @@ class TodoFilter extends React.Component {
                     </span>
                     <ul className="filters" data-reactid=".0.2.1">
                         <li data-reactid=".0.2.1.0">
-                            <a className={tab === BUTTON.all ? 'selected': ''} href="#/" onClick={() => {
-                                handleShowList(BUTTON.all);
-                            }} data-reactid=".0.2.1.0.0">
+                            <a
+                                className={tab === BUTTON.all ? 'selected' : ''}
+                                href="#/"
+                                data-reactid=".0.2.1.0.0"
+                                onClick={() => {
+                                    handleShowList(BUTTON.all);
+                                }}
+                            >
                                 All
                             </a>
                         </li>
                         <span data-reactid=".0.2.1.1"> </span>
                         <li data-reactid=".0.2.1.2">
-                            <a className={tab === BUTTON.active ? 'selected': ''} onClick={() => {
-                                handleShowList(BUTTON.active);
-                            }} href="#/"  data-reactid=".0.2.1.2.0">
+                            <a
+                                className={tab === BUTTON.active ? 'selected' : ''}
+                                href="#/"
+                                data-reactid=".0.2.1.2.0"
+                                onClick={() => {
+                                    handleShowList(BUTTON.active);
+                                }}
+                            >
                                 Active
                             </a>
                         </li>
                         <span data-reactid=".0.2.1.3"> </span>
                         <li data-reactid=".0.2.1.4">
-                            <a className={tab === BUTTON.inactive ? 'selected': ''} onClick={() => {
-                                handleShowList(BUTTON.inactive);
-                            }} href="#/" data-reactid=".0.2.1.4.0">
+                            <a
+                                className={tab === BUTTON.inactive ? 'selected' : ''}
+                                href="#/"
+                                data-reactid=".0.2.1.4.0"
+                                onClick={() => {
+                                    handleShowList(BUTTON.inactive);
+                                }}
+                            >
                                 Completed
                             </a>
                         </li>
                     </ul>
-                    { numberOf < todoList.length &&
-                        <a href="#/" onClick={() => handleOnDeleteComplete()} className="clear-completed" >Clear completed</a>
+                    {numberOf < todoList.length &&
+                        <a
+                            href="#/"
+                            onClick={() => handleOnDeleteComplete()}
+                            className="clear-completed"
+                        >
+                            Clear completed
+                        </a>
                     }
                 </footer>
             </div>

@@ -21,7 +21,6 @@ export default class TodoApp extends Component {
             content: "",
             editItem: {},
             showInputEditItem: false,
-            showList: true,
             tab: BUTTON.all,
         }
     }
@@ -34,7 +33,7 @@ export default class TodoApp extends Component {
     }
 
     handleOnAddTodoList = () => {
-        if(!this.state.content) {
+        if (!this.state.content) {
             return;
         }
         this.setState((prevState) => ({
@@ -103,8 +102,8 @@ export default class TodoApp extends Component {
             ...prevState,
             todoList: [
                 ...prevState.todoList.map((el) => {
-                    if(el.id === item.id) {
-                        return{
+                    if (el.id === item.id) {
+                        return {
                             ...item,
                             isComplete: !item.isComplete
                         }
@@ -125,7 +124,6 @@ export default class TodoApp extends Component {
                         isComplete: true,
                     };
                 }),
-                showList: true,
             }))
         } else {
             this.setState((prevState) => ({
@@ -136,15 +134,13 @@ export default class TodoApp extends Component {
                         isComplete: false,
                     };
                 }),
-                showList: true,
             }))
         }
     }
 
     isAllChecked() {
-        
         const findUnchecked = this.state.todoList.find(el => !el.isComplete);
-        if(this.state.todoList.length === 0) {
+        if (this.state.todoList.length === 0) {
             return findUnchecked;
         }
         return !findUnchecked;
@@ -153,7 +149,7 @@ export default class TodoApp extends Component {
     getShowTodoList() {
         if (this.state.tab === BUTTON.all) {
             return this.state.todoList;
-        } else if(this.state.tab === BUTTON.active) {
+        } else if (this.state.tab === BUTTON.active) {
             return this.state.todoList.filter(el => {
                 return !el.isComplete;
             });
@@ -167,15 +163,15 @@ export default class TodoApp extends Component {
     handleOnDeleteComplete = () => {
         this.setState((prevState) => ({
             ...prevState,
-            todoList:prevState.todoList.filter((item) => {
-                if(item.isComplete !== true ) {
+            todoList: prevState.todoList.filter((item) => {
+                if (item.isComplete !== true) {
                     return item;
                 }
             })
         }))
     }
 
-    
+
     render() {
         return (
             <section className="todoapp">
@@ -185,7 +181,7 @@ export default class TodoApp extends Component {
                         <input
                             className="new-todo"
                             placeholder="What needs to be done?"
-                            value={this.state.content}
+                            value={this.state.content || ""}
                             data-reactid=".0.0.1"
                             onChange={(event) => this.handleOnchangeContent(event)}
                             onKeyDown={(event) => {
