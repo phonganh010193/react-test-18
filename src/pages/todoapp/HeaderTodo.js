@@ -1,13 +1,14 @@
 import React from "react";
 
-class HeaderTodo extends React.Component() {
+class HeaderTodo extends React.Component{
     constructor(props) {
         super(props);
         this.state = {}
     }
     render() {
         const {
-            handleOnchangeContent,
+            content,
+            handleOnchangeContent, 
             handleOnAddTodoList
         } = this.props;
         return (
@@ -16,7 +17,7 @@ class HeaderTodo extends React.Component() {
                 <input
                     className="new-todo"
                     placeholder="What needs to be done?"
-                    value={this.state.content || ""}
+                    value={content || ""}
                     data-reactid=".0.0.1"
                     onChange={(event) => handleOnchangeContent(event)}
                     onKeyDown={(event) => {

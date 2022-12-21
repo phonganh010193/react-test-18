@@ -178,6 +178,7 @@ export default class TodoApp extends Component {
             <section className="todoapp">
                 <div data-reactid=".0">
                     <HeaderTodo
+                        content={this.state.content}
                         handleOnchangeContent={this.handleOnchangeContent}
                         handleOnAddTodoList={this.handleOnAddTodoList}
                     />
