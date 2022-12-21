@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import AppTodo from "./pages/apptodo/AppTodo";
+import TodoApp from "./pages/todoapp/TodoApp";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +9,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <AppTodo />
+        <TodoApp />
       </>
     );
   }
