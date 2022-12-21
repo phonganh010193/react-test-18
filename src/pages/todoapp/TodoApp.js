@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import HeaderTodo from "./HeaderTodo";
 import ListTodo from "./ListTodo";
 import "./TodoApp.css";
 import TodoFilter from "./TodoFilter";
@@ -176,22 +177,10 @@ export default class TodoApp extends Component {
         return (
             <section className="todoapp">
                 <div data-reactid=".0">
-                    <header className="header" data-reactid=".0.0">
-                        <h1 data-reactid=".0.0.0">todos</h1>
-                        <input
-                            className="new-todo"
-                            placeholder="What needs to be done?"
-                            value={this.state.content || ""}
-                            data-reactid=".0.0.1"
-                            onChange={(event) => this.handleOnchangeContent(event)}
-                            onKeyDown={(event) => {
-                                if (event.key === "Enter") {
-                                    this.handleOnAddTodoList()
-                                    return;
-                                }
-                            }}
-                        />
-                    </header>
+                    <HeaderTodo
+                        handleOnchangeContent={this.handleOnchangeContent}
+                        handleOnAddTodoList={this.handleOnAddTodoList}
+                    />
                     <ListTodo
                         isAllCheckbox={this.isAllChecked()}
                         todoList={this.getShowTodoList()}
