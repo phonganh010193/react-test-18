@@ -1,19 +1,14 @@
-import React from "react";
-import { BUTTON } from "./AppTodo";
+import React, { useContext } from "react";
+import { BUTTON } from "./useHook";
+import { TodoContext } from "./useContext";
 function TodoFilter(props) {
     const {
         listTodo,
         onShoWList,
         tab,
-        handleOnDelete
-    } = props;
-    const numberOf = listTodo.reduce(function (accumulator, currentValue) {
-        if (currentValue.isComplete === false) {
-            return accumulator + 1;
-        }
-        return accumulator;
-
-    }, 0);
+        handleOnDelete,
+        numberOf
+    } = useContext(TodoContext);
     return (
         <div>
             <footer className="footer" data-reactid=".0.2">

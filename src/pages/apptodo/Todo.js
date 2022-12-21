@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TodoContext } from "./useContext";
 
 function Todo(props) {
+    const {
+        item,
+        index,
+    } = props;
     const {
         onDelete,
         isShowInputEdit,
         onClickEditItem,
         editItem,
         onEdit,
-        item,
-        index,
         handleOnchangeCheckboxItem
-    } = props;
+    } = useContext(TodoContext);
     const [text, setText] = useState(item.content);
     return (
         <li
@@ -36,7 +39,9 @@ function Todo(props) {
                         onClickEditItem(item)
                     }}
                 >
-                    <span className={item.isComplete === true ? "text-content" : ""}>{item.content}</span>
+                    <span className={item.isComplete === true ? "text-content" : ""}>
+                        {item.content}
+                    </span>
                 </label>
                 <button
                     className="destroy"
@@ -46,7 +51,6 @@ function Todo(props) {
                     }}
                 />
             </div>
-
             <input
                 style={isShowInputEdit === true && item.id === editItem.id ? { display: "block" } : null}
                 className="edit"

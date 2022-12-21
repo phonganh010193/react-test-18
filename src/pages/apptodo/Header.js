@@ -1,10 +1,12 @@
+import { useContext } from "react";
+import { TodoContext } from "./useContext";
 
 function Header(props) {
     const {
         content,
         handleOnchangeContent,
         onAddListTodo
-    } = props;
+    } = useContext(TodoContext);;
     return (
         <header className="header" data-reactid=".0.0">
             <h1 data-reactid=".0.0.0">todos</h1>
@@ -19,6 +21,7 @@ function Header(props) {
                 onKeyDown={(e) => {
                     if (e.key === "Enter") {
                         onAddListTodo()
+                        return;
                     }
                 }}
             />

@@ -4,9 +4,8 @@ import AppTodo from "./pages/apptodo/AppTodo";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { show: true };
+    this.state = {};
   }
-
   render() {
     return (
       <>

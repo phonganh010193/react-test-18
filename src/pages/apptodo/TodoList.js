@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import Todo from "./Todo";
+import { TodoContext } from "./useContext";
 
 function ListTodo(props) {
     const {
-        listTodo,
+        getShowListTodo,
         handleOnAllCheckbox,
         isAllCheckbox
-    } = props;
-
+    } = useContext(TodoContext);
+    const listTodo = getShowListTodo()
+    const isAllCheck = isAllCheckbox()
     return (
         <div>
             <section className="main" data-reactid=".0.1">
@@ -15,7 +17,7 @@ function ListTodo(props) {
                     id="toggle-all"
                     className="toggle-all"
                     type="checkbox"
-                    checked={isAllCheckbox}
+                    checked={isAllCheck}
                     data-reactid=".0.1.0"
                     onChange={() => {
                         handleOnAllCheckbox()
