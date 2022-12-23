@@ -27,7 +27,7 @@ function Todo(props) {
                 <input
                     className="toggle"
                     type="checkbox"
-                    checked={item.isComplete}
+                    checked={item.isComplete || false}
                     data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654.0.0"
                     onChange={() => {
                         handleOnchangeCheckboxItem(item)

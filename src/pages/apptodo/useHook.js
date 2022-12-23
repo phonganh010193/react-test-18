@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Api from "../server/Api";
 
 export const BUTTON = {
     all: "all",
@@ -6,11 +7,8 @@ export const BUTTON = {
     complete: "conplete"
 }
 function UseHook() {
-    const [listTodo, setListTodo] = useState([
-        { id: 1, content: 'an sang', isComplete: false },
-        { id: 2, content: 'an true', isComplete: false },
-        { id: 3, content: 'an toi', isComplete: false },
-    ]);
+
+    const [listTodo, setListTodo] = useState([]);
     const [content, setContent] = useState("");
     const [isShowInputEdit, setIsShowInputEdit] = useState(false);
     const [editItem, setEditItem] = useState("");
@@ -18,46 +16,46 @@ function UseHook() {
     const handleOnchangeContent = (event) => {
         setContent(event.target.value);
     }
-    const onAddListTodo = () => {
-        setListTodo([
-            ...listTodo,
-            {
-                id: Math.floor(Math.random() * 1000),
-                content: content,
-                isComplete: false
-            }
-        ]);
+    const fetchListTodo = async () => {
+        const res = await Api.getList();
+        console.log('res', res.data);
+        setListTodo(res.data);
+    }
+    useEffect(() => {
+        fetchListTodo();
+    }, []);
+    const onAddListTodo = async () => {
+        if (!content) {
+            return;
+        }
+        await Api.createTodoList({
+            content: content,
+            isComplete: false
+        });
+        fetchListTodo()
         setContent("")
     }
-    const onDelete = (item) => {
-        const copyListTodo = [...listTodo];
-        const newList = copyListTodo.filter(el => el.id !== item.id);
-        setListTodo(newList);
+    const onDelete = async (item) => {
+        await Api.DeleteItem(item.id);
+        fetchListTodo();
     }
     const onClickEditItem = (item) => {
         console.log('editItem', item);
         setEditItem(item)
         setIsShowInputEdit(true)
     }
-    const onEdit = (item, index) => {
-        const copyListTodo = [...listTodo];
-        copyListTodo.splice(index, 1, item);
-        setListTodo(copyListTodo);
+    const onEdit = async (item) => {
+        await Api.UpdateItem(item.id, {
+            content: item.content
+        });
+        fetchListTodo();
         setEditItem("");
     }
-    const handleOnchangeCheckboxItem = (item) => {
-        console.log('item checkbox', item)
-        const copyListTodo = [...listTodo];
-        const newList = copyListTodo.map((el) => {
-            if (item.id === el.id) {
-                return {
-                    ...el,
-                    isComplete: !el.isComplete
-                }
-            }
-            return el;
+    const handleOnchangeCheckboxItem = async (item) => {
+        await Api.UpdateItem(item.id, {
+            isComplete: !item.isComplete
         });
-        setListTodo(newList);
+        fetchListTodo();
     }
     const handleOnAllCheckbox = () => {
         const findUncheck = listTodo.find(el => !el.isComplete);

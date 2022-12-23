@@ -26,7 +26,7 @@ class ListTodo extends React.Component {
                         id="toggle-all"
                         className="toggle-all"
                         type="checkbox"
-                        checked={isAllCheckbox}
+                        checked={isAllCheckbox || false}
                         data-reactid=".0.1.0"
                         onChange={handleOnCheckboxAll}
                     />
@@ -49,7 +49,7 @@ class ListTodo extends React.Component {
                                                     className="toggle"
                                                     type="checkbox"
                                                     data-reactid=".0.1.2.$bb632cfd-6960-41f0-a68e-5387c4a20654.0.0"
-                                                    checked={item.isComplete}
+                                                    checked={item.isComplete || false}
                                                     onChange={() => handleOnChangeCheckbox(item)}
 
                                                 />
@@ -82,7 +82,7 @@ class ListTodo extends React.Component {
                                                 onChange={(event) => handleOnchangeInputEdit(event)}
                                                 onKeyDown={(event) => {
                                                     if (event.key === "Enter") {
-                                                        handleOnEditItem();
+                                                        handleOnEditItem(editItem);
                                                         return;
                                                     }
                                                 }}

@@ -17,7 +17,7 @@ function ListTodo(props) {
                     id="toggle-all"
                     className="toggle-all"
                     type="checkbox"
-                    checked={isAllCheck}
+                    checked={isAllCheck || false}
                     data-reactid=".0.1.0"
                     onChange={() => {
                         handleOnAllCheckbox()

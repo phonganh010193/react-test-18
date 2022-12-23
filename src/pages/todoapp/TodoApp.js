@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Api from "../server/Api";
 import HeaderTodo from "./HeaderTodo";
 import ListTodo from "./ListTodo";
 import "./TodoApp.css";
@@ -14,15 +15,24 @@ export default class TodoApp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            todoList: [
-                { id: 1, content: "an sang", isComplete: false },
-                { id: 2, content: "an trua", isComplete: false },
-                { id: 3, content: "an toi", isComplete: false }
-            ],
+            todoList: [],
             content: "",
             editItem: {},
             showInputEditItem: false,
             tab: BUTTON.all,
+        }
+    }
+
+    async componentDidMount() {
+        try {
+            const res = await Api.getList();
+            console.log('res', res);
+            this.setState((prevState) => ({
+                ...prevState,
+                todoList: res.data
+            }))
+        } catch (error) {
+            console.log('error', error);
         }
     }
 
@@ -33,31 +43,40 @@ export default class TodoApp extends Component {
         }))
     }
 
-    handleOnAddTodoList = () => {
+    handleOnAddTodoList = async () => {
         if (!this.state.content) {
             return;
         }
-        this.setState((prevState) => ({
-            ...prevState,
-            todoList: [
-                ...prevState.todoList,
-                {
-                    id: Math.floor(Math.random() * 1000),
-                    content: prevState.content,
-                    isComplete: false
-                }
-            ],
-            content: ""
-        }))
+        const params = {
+            content: this.state.content,
+            isComplete: false
+        }
+        try {
+            await Api.createTodoList(params);
+            const data = await Api.getList();
+            console.log('resCreate', data.data)
+            this.setState((prevState) => ({
+                ...prevState,
+                todoList: data.data,
+                content: ""
+            }))
+        } catch (error) {
+            console.log('error', error);
+        }
     }
-
-    handleOnclickDeleteItem = (item) => {
-        this.setState((prevState) => ({
-            ...prevState,
-            todoList: prevState.todoList.filter(el => el.id !== item.id)
-        }))
+    handleOnclickDeleteItem = async (item) => {
+        try {
+            await Api.DeleteItem(item.id);
+            const res = await Api.getList()
+            this.setState((prevState) => ({
+                ...prevState,
+                todoList: res.data,
+                content: ""
+            }));
+        } catch (error) {
+            console.log('error', error);
+        }
     }
-
     handleOnclickEditItem = (item) => {
         this.setState((prevState) => ({
             ...prevState,
@@ -76,19 +95,21 @@ export default class TodoApp extends Component {
         }))
     }
 
-    handleOnEditItem = () => {
-        this.setState((prevState) => ({
-            ...prevState,
-            todoList: [
-                ...prevState.todoList.map((item, index) => {
-                    if (item.id === prevState.editItem.id) {
-                        return { ...item, content: prevState.editItem.content }
-                    }
-                    return item;
-                })
-            ],
-            showInputEditItem: false
-        }))
+    handleOnEditItem = async (item) => {
+        try {
+            await Api.UpdateItem(item.id, {
+                content: item.content
+            })
+            const res = await Api.getList();
+            console.log('resUpdate', res.data);
+            this.setState((prevState) => ({
+                ...prevState,
+                todoList: res.data,
+                showInputEditItem: false
+            }))
+        } catch (error) {
+            console.log('error', error);
+        }
     }
 
     handleShowList = (tab) => {
@@ -98,21 +119,15 @@ export default class TodoApp extends Component {
         }))
     }
 
-    handleOnChangeCheckbox = (item) => {
+    handleOnChangeCheckbox = async (item) => {
+        await Api.UpdateItem(item.id, {
+            isComplete: !item.isComplete
+        });
+        const res = await Api.getList();
         this.setState((prevState) => ({
             ...prevState,
-            todoList: [
-                ...prevState.todoList.map((el) => {
-                    if (el.id === item.id) {
-                        return {
-                            ...item,
-                            isComplete: !item.isComplete
-                        }
-                    }
-                    return el;
-                })
-            ],
-        }))
+            todoList: res.data
+        }));
     }
     handleOnCheckboxAll = () => {
         const findUnchecked = this.state.todoList.find(el => !el.isComplete);
