@@ -127,69 +127,6 @@ export default class CrudAxiosExample extends Component {
     }))
   }
   handleOnsubmit = () => {
-    // const { editItem } = this.state;
-    // console.log('editItemUpdate', editItem)
-    // if (this.state.mode !== "Submit") {
-    //   let copyListEntries = [...this.state.listEntries];
-    //   let editIndex = copyListEntries.findIndex(el => el.id === editItem.id);
-    //   copyListEntries[editIndex].avatar = editItem.avatar;
-    //   copyListEntries[editIndex].name = editItem.name;
-    //   copyListEntries[editIndex].description = editItem.description;
-    //   this.setState((prevState) => ({
-    //     ...prevState,
-    //     listEntries: copyListEntries,
-    //     editItem: {},
-    //     showModelEmtries: false,
-    //     avatar: "",
-    //     name: "",
-    //     description: "",
-    //     validateName: "",
-    //     validateDescription: "",
-    //     validateImage: ""
-    //   }))
-    //   return;
-    // }
-
-    // if (!this.state.avatar) {
-    //   this.setState((prevState) => ({
-    //     ...prevState,
-    //     validateImage: "Missing avatar.",
-    //   }));
-
-    // }
-    // if (!this.state.name) {
-    //   this.setState((prevState) => ({
-    //     ...prevState,
-    //     validateName: "Missing Name"
-    //   }));
-
-    // }
-    // if (!this.state.description) {
-    //   this.setState((prevState) => ({
-    //     ...prevState,
-    //     validateDescription: "Missing Description"
-    //   }));
-    //   return;
-    // }
-    // this.setState((prevState) => ({
-    //   ...prevState,
-    //   listEntries: [
-    //     ...prevState.listEntries,
-    //     {
-    //       id: Math.floor(Math.random() * 1000),
-    //       avatar: prevState.avatar,
-    //       name: prevState.name,
-    //       description: prevState.description
-    //     }
-    //   ],
-    //   avatar: "",
-    //   name: "",
-    //   description: "",
-    //   validateName: "",
-    //   validateDescription: "",
-    //   validateImage: "",
-    //   showModelEmtries: false
-    // }));
     if (!this.state.avatar || !this.state.name || !this.state.description) {
       alert('Xin hay nhap du du lieu');
       return;
